@@ -38,6 +38,6 @@
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/kleelof",
-    "repository" : "https://github.com/kleelof/swan.git"
+    "repository" : "https://github.com/kleelof/swan-server.git"
   }
 }
