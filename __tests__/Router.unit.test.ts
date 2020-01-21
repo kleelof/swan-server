@@ -1,6 +1,5 @@
-import Router, { HTTPRoute, SocketRoute } from '../src/Router';
-import { TemplateView } from '../src/views';
-import { Request } from '../src/Request'
+import { HTTPRoute } from '../src/router/HTTPRoute';
+import { TemplateView } from '../src/views/TemplateView';
 
 describe(' Router testing ', () => {
     describe( 'HTTPRoute tests ', () => {

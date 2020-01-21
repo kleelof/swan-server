@@ -1,6 +1,6 @@
 import { createServer, Server } from 'http';
 import io from 'socket.io'
-import { SocketRoute } from './Router';
+import { SocketRoute } from './router/SocketRoute';
 
 export interface ISocketOptions {
     PORT: number
@@ -16,7 +16,7 @@ export class SocketServer {
         this.socketHandler = io(this.httpConnection);
     }
 
-    public listen(PORT: number): Promise<String> {
+    public listen(PORT: number): Promise<string> {
         return new Promise((resolve, reject) => {
             this.socketHandler.on('connection', (socket: io.Socket) => {
                 

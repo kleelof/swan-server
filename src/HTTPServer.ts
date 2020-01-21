@@ -4,7 +4,8 @@ import http from 'http';
 import path from 'path';
 import { Request, resourceTypes } from './Request';
 import { Response } from './Response';
-import Router, { HTTPRoute } from './Router';
+import { HTTPRoute } from './router/HTTPRoute';
+import Router from './router/Router';
 import { IServerOptions } from './Swan';
 
 export interface IHTTPServer{
@@ -45,13 +46,13 @@ export class HTTPServer{
             response.send(
                 statusCode, 
                 {
-                    css: `{Content-Type: 'text/css'}`,
-                    png: `{Content-Type: 'image/png'}`,
-                    jpg: `{Content-Type: 'image/jpeg'}`,
-                    jpeg: `{Content-Type: 'image/jpeg'}`,
-                    gif: `{Content-Type: 'image/gif'}`,
                     bmp: `{Content-Type: 'image/bmp'}`,
-                    js: `application/javascript`
+                    css: `{Content-Type: 'text/css'}`,
+                    gif: `{Content-Type: 'image/gif'}`,
+                    jpeg: `{Content-Type: 'image/jpeg'}`,
+                    jpg: `{Content-Type: 'image/jpeg'}`,
+                    js: `application/javascript`,
+                    png: `{Content-Type: 'image/png'}`
                 }[request.extension], 
                 content
                 );

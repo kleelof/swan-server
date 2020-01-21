@@ -1,5 +1,5 @@
 {
-  "name": "swan",
+  "name": "swan-server",
   "version": "1.0.0",
   "description": "A lightweight web application framework",
   "main": "lib/index.js",
@@ -35,5 +35,9 @@
   "dependencies": {
     "client-sessions": "^0.8.0",
     "socket.io": "^2.3.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/kleelof",
+    "repository" : "https://github.com/kleelof/swan.git"
   }
 }

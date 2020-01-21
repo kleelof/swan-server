@@ -7,6 +7,13 @@ export enum resourceTypes {
 }
 
 export class Request {
+
+    public static createTestRequest(HTTPrequestParameters?: {}){
+        const httpRequest: http.IncomingMessage = new http.IncomingMessage(new Socket());
+        Object.assign(httpRequest, HTTPrequestParameters)
+        return new Request(httpRequest);
+    }
+
     public parameters = {};
     public pathParameters = {};
     public extension: string = ``;
@@ -15,7 +22,7 @@ export class Request {
     public requestResourceType: resourceTypes | undefined = resourceTypes.template;
     public routeDomain: string | undefined;
     public httpRequest: http.IncomingMessage | undefined;
-
+    
     private staticFileExtensions = [`css`, `png`, 'js'];
 
     constructor(public request:http.IncomingMessage){
@@ -41,11 +48,5 @@ export class Request {
                 if (this.staticFileExtensions.indexOf(this.extension) > -1) {this.requestResourceType = resourceTypes.static;} 
             }
         }
-    }
-    
-    public static createTestRequest(HTTPrequestParameters?: {}){
-        const httpRequest: http.IncomingMessage = new http.IncomingMessage(new Socket());
-        Object.assign(httpRequest, HTTPrequestParameters)
-        return new Request(httpRequest);
     }
 }
