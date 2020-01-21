@@ -1,0 +1,39 @@
+{
+  "name": "swan",
+  "version": "1.0.0",
+  "description": "A lightweight web application framework",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "jest --config jestconfig.json",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/client-sessions": "^0.8.0",
+    "@types/jest": "^24.9.0",
+    "@types/socket.io": "^2.1.4",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1",
+    "ts-jest": "^24.3.0",
+    "tslint": "^5.20.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.7.4"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "dependencies": {
+    "client-sessions": "^0.8.0",
+    "socket.io": "^2.3.0"
+  }
+}
