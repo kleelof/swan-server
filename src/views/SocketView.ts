@@ -1,11 +1,12 @@
-import { Socket } from 'socket.io';
+import { Socket, EngineSocket } from 'socket.io';
+import { io } from '..';
 
 export interface ISocketView {
-    processRequest: (socket:Socket, args: any, fn: (data: {}) => {}) => void
+    processRequest: (socket:Socket, args: any, fn: (data: {}) => {}, io: io.Server) => void
 }
 
 export class SocketView  {
-    public processRequest = (socket:Socket, data: any, fn: (data: {}) => {}) => {
+    public processRequest = (socket:Socket, data: any, fn: (data: {}) => {}, io: io.Server) => {
         fn(data);
     }
 

@@ -8,12 +8,12 @@ export interface ISocketOptions {
 
 export class SocketServer {
     private httpConnection: Server;
-    private socketHandler: any;
+    private socketHandler: io.Server;
     private routes: SocketRoute[] = [];
 
     constructor(){
         this.httpConnection = createServer();
-        this.socketHandler = io(this.httpConnection, {origins: "*"});
+        this.socketHandler = io(this.httpConnection, {origins: "*:*"});
         
     }
 
@@ -23,11 +23,11 @@ export class SocketServer {
                 console.log('connection');
                 this.routes.forEach((route: SocketRoute) => {
                     socket.on(route.name, (args: any, fn) => {
-                        route.view.processRequest(socket, args, fn);
+                        route.view.processRequest(socket, args, fn, this.socketHandler);
                     })
                 })
             })
-
+            
             this.httpConnection.on('error', (err) => {
                 reject(`SocketServer Error: ${err}`)
             })
