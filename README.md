@@ -2,5 +2,8 @@ Swan is an ultra-lightweight HTTP and Socket server for development of front-end
 
 This library has been designed for those who want an very unopinioated solution to getting their React, Angular or other front-end application online quickly and easily.
 
-Handlebars Templeting
-Easy to configure HTTP and Socket views
+Handlebars Templeting<br/>
+Easy to configure HTTP and Socket views<br/>
+Uses socket.io
+
+npm -i swan-server
