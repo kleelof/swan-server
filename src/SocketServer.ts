@@ -22,8 +22,8 @@ export class SocketServer {
             this.socketHandler.on('connection', (socket: io.Socket) => {
                 console.log('connection');
                 this.routes.forEach((route: SocketRoute) => {
-                    socket.on(route.name, (args: any, fn) => {
-                        route.view.processRequest(socket, args, fn, this.socketHandler);
+                    socket.on(route.name, (args: any) => {
+                        route.view.processRequest(socket, args, this.socketHandler);
                     })
                 })
             })
