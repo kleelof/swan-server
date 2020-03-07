@@ -4,3 +4,5 @@ This library has been designed for those who want an very unopinioated solution 
 
 Handlebars Templeting
 Easy to configure HTTP and Socket views
+
+npm -i swan-server
