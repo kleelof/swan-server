@@ -37,7 +37,6 @@ export class HTTPServer{
 
             try{
                 content = fs.readFileSync(filePath);
-                console.log('loaded');
             }catch(err){
                 console.log(`Template ${filePath} not found`);
                 statusCode = 404
@@ -46,13 +45,13 @@ export class HTTPServer{
             response.send(
                 statusCode, 
                 {
-                    bmp: `{Content-Type: 'image/bmp'}`,
-                    css: `{Content-Type: 'text/css'}`,
-                    gif: `{Content-Type: 'image/gif'}`,
-                    jpeg: `{Content-Type: 'image/jpeg'}`,
-                    jpg: `{Content-Type: 'image/jpeg'}`,
+                    bmp: 'image/bmp',
+                    css: 'text/css',
+                    gif: 'image/gif',
+                    jpeg: 'image/jpeg',
+                    jpg: 'image/jpeg',
                     js: `application/javascript`,
-                    png: `{Content-Type: 'image/png'}`
+                    png: 'image/png'
                 }[request.extension], 
                 content
                 );
