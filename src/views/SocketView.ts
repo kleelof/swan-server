@@ -1,5 +1,5 @@
 import { Socket, EngineSocket } from 'socket.io';
-import { io } from '..';
+import io from 'socket.io';
 
 export interface ISocketView {
     processRequest: (socket:Socket, args: any, fn: (data: {}) => {}, io: io.Server) => void
