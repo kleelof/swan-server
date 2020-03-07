@@ -3,21 +3,29 @@ import io from 'socket.io'
 import { SocketRoute } from './router/SocketRoute';
 
 export interface ISocketOptions {
-    PORT: number
+    PORT: number,
+    routes: SocketRoute[],
+    origins?: string
 }
 
-export class SocketServer {
+export default class SocketServer {
     private httpConnection: Server;
     private socketHandler: io.Server;
-    private routes: SocketRoute[] = [];
+    private routes: SocketRoute[];
+    private PORT: number;
 
-    constructor(){
+    constructor(options: ISocketOptions){
+        this.PORT = options.PORT;
         this.httpConnection = createServer();
-        this.socketHandler = io(this.httpConnection, {origins: "*:*"});
+        this.routes = options.routes;
+
+        const socketConfig: any = {};
+        if (options.origins) {socketConfig.origins = options.origins;}
+        this.socketHandler = io(this.httpConnection, socketConfig);
         
     }
 
-    public listen(PORT: number): Promise<string> {
+    public listen(): Promise<string> {
         return new Promise((resolve, reject) => {
             this.socketHandler.on('connection', (socket: io.Socket) => {
                 console.log('connection');
@@ -32,16 +40,10 @@ export class SocketServer {
                 reject(`SocketServer Error: ${err}`)
             })
     
-            this.httpConnection.listen(PORT, () => {
-                console.log(`SocketServer Listening: ${PORT}`)
+            this.httpConnection.listen(this.PORT, () => {
+                console.log(`SocketServer Listening: ${this.PORT}`)
                 resolve();
             })
         })
     }
-
-    public addRoute(route: SocketRoute): void  {
-        this.routes.push(route);
-    }
 }
-
-export default new SocketServer();

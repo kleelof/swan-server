@@ -5,28 +5,40 @@ import path from 'path';
 import { Request, resourceTypes } from './Request';
 import { Response } from './Response';
 import { HTTPRoute } from './router/HTTPRoute';
-import Router from './router/Router';
-import { IServerOptions } from './Swan';
 
 export interface IHTTPServer{
     beginListening: () => void
 }
 
+export interface IHTTPServerOptions {
+    sessionOptions: Session.SessionOptions,
+    PORT: number,
+    routes: HTTPRoute[]
+}
+
 export class HTTPServer{
     private requestSessionHandler: any;
+    private routes: HTTPRoute[];
 
-    constructor(private serverOptions: IServerOptions){
+    constructor(private serverOptions: IHTTPServerOptions){
         this.requestSessionHandler = Session.default(serverOptions.sessionOptions)
+        this.routes = serverOptions.routes;
     }
 
-    public beginListening = (): void => {
-        http.createServer((request: http.IncomingMessage, response: http.ServerResponse) => {
-            this.requestSessionHandler(request, response, () => {
-                this.onHTTPRequestReceived(new Request(request), new Response(response));
+    public listen = (): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            http.createServer((request: http.IncomingMessage, response: http.ServerResponse) => {
+                this.requestSessionHandler(request, response, () => {
+                    this.onHTTPRequestReceived(new Request(request), new Response(response));
+                })
+                
             })
-            
+            .listen(this.serverOptions.PORT, () => console.info(`HTTPServer Listening: ${this.serverOptions.PORT}`))
+            .on('error', (err) => {
+                reject(err);
+            })
+            .on('listening', () => resolve)
         })
-        .listen(this.serverOptions.PORT, () => console.info(`HTTPServer Listening: ${this.serverOptions.PORT}`))
     }
 
     private onHTTPRequestReceived = (request: Request, response: Response): void => {
@@ -56,7 +68,7 @@ export class HTTPServer{
                 content
                 );
         }else{
-            const route: HTTPRoute | null = Router.getRouteByPath(request.url);
+            const route: HTTPRoute | null = this.getRouteByPath(request.url);
         
             if (route){
                 route.view.render(request, response)
@@ -64,5 +76,10 @@ export class HTTPServer{
                 response.send(404, `{Content-Type: 'html/text'}`);
             }
         } 
+    }
+
+    private getRouteByPath(url: string): HTTPRoute | null {
+        const routes: HTTPRoute[] = this.routes.filter( route => route.checkRoute(url) );
+        return (routes[0])? routes[0] : null;
     }
 }

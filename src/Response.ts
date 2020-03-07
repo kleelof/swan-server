@@ -1,8 +1,8 @@
 import http from 'http';
 import { IRenderer, Renderer } from './Renderer';
-import { HTTPRoute } from './router/HTTPRoute';
-import { Route } from './router/Route';
-import Router from './router/Router';
+// import { HTTPRoute } from './router/HTTPRoute';
+// import { Route } from './router/Route';
+// import Router from './router/Router';
 
 export class Response {
     private renderer: IRenderer;
@@ -15,7 +15,7 @@ export class Response {
         if (template) {template = this.renderer.render(template, (fill)? fill: {})};
         this.send(statusCode, `{Content-Type: 'html/text'}`, template);
     }
-
+/*
     public redirect(routeName: string){
         const route: Route | null = Router.getRouteByName(routeName);
         if (route){
@@ -26,7 +26,7 @@ export class Response {
         }
         
     }
-
+*/
     public respondJSON = (data: {}): void => {
         this.send(200, 'application/json', JSON.stringify(data));
     }
